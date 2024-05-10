@@ -1,0 +1,16 @@
+
+
+services:
+  server:
+    container_name: server
+    build: ./django_app
+    ports:
+      - 7070:8080
+    env_file: .env
+    restart: "on-failure"
+    # depends_on: 
+    #   broker: 
+    #     condition: service_started
+    #   celery: 
+    #     condition: service_started
+

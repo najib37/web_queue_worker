@@ -1,6 +1,28 @@
-
+# TODO: setup the network and desable the public ports
+# networks:
+#   internal_net:
 
 services:
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    container_name: rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
+    restart: "on-failure"
+    environment:
+# WARN: delete these variables and use the env file
+      - RABBITMQ_DEFAULT_USER=userf
+      - RABBITMQ_DEFAULT_PASS=userd
+
+  redis:
+    container_name:  redis
+    image: redis:latest
+    restart: "on-failure"
+    ports: 
+      - 6060:6379
+    command: redis-server --save 60 1 --loglevel warning
+
   server:
     container_name: server
     build: ./django_app
@@ -8,9 +30,17 @@ services:
       - 7070:8080
     env_file: .env
     restart: "on-failure"
-    # depends_on: 
-    #   broker: 
-    #     condition: service_started
-    #   celery: 
-    #     condition: service_started
+    depends_on: 
+      celery: 
+        condition: service_started
 
+  celery:
+    container_name: celery
+    build: ./celery
+    env_file: .env
+    restart: "on-failure"
+    depends_on:
+      rabbitmq: 
+        condition: service_started
+      redis: 
+        condition: service_started

@@ -12,7 +12,6 @@ app = Celery (
     # TODO: these needs to be replaced by env variables 
 )
 
-# app.send_task('readfile', [file])
 
 def home_view(request: HttpRequest):
 
@@ -21,9 +20,8 @@ def home_view(request: HttpRequest):
         print("______________________________________________________")
         if form.is_valid():
             file = request.FILES.get('file')
-            newFile = default_storage.save(file.name, file)
-            print(newFile)
-
+            filename = default_storage.save(file.name, file)
+            app.send_task('converter', [filename])
         else:
             print("unvalid form")
     else:

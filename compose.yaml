@@ -34,6 +34,7 @@ services:
       internal_net:
     volumes:
       - ./django_app/:/home/
+      - ./shared_data:/home/media
     ports:
       - 7070:8080
     env_file: .env
@@ -49,6 +50,7 @@ services:
       internal_net:
     volumes:
       - ./celery/:/home/
+      - ./shared_data:/home/media
     env_file: .env
     restart: "on-failure"
     depends_on:

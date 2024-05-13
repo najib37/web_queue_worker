@@ -1,11 +1,13 @@
 # TODO: setup the network and desable the public ports
-# networks:
-#   internal_net:
+networks:
+  internal_net:
 
 services:
   rabbitmq:
     image: rabbitmq:3.13-management
     container_name: rabbitmq
+    networks:
+      internal_net:
     ports:
       - 5672:5672
       - 15672:15672
@@ -19,6 +21,8 @@ services:
     container_name:  redis
     image: redis:latest
     restart: "on-failure"
+    networks:
+      internal_net:
     ports: 
       - 6060:6379
     command: redis-server --save 60 1 --loglevel warning
@@ -26,6 +30,10 @@ services:
   server:
     container_name: server
     build: ./django_app
+    networks:
+      internal_net:
+    volumes:
+      - ./django_app/:/home/
     ports:
       - 7070:8080
     env_file: .env
@@ -37,6 +45,10 @@ services:
   celery:
     container_name: celery
     build: ./celery
+    networks:
+      internal_net:
+    volumes:
+      - ./celery/:/home/
     env_file: .env
     restart: "on-failure"
     depends_on:

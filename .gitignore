@@ -6,3 +6,4 @@ venv/
 __pycache__/
 *.sqlite3
 shared_data/
+static/

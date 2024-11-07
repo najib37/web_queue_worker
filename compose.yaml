@@ -1,4 +1,4 @@
-# TODO: setup the network and desable the public ports
+# TODO: setup the network and disable the public ports
 networks:
   internal_net:
 
@@ -12,8 +12,8 @@ services:
       - 5672:5672
       - 15672:15672
     restart: "on-failure"
+    # WARN: delete these variables and use the env file
     environment:
-# WARN: delete these variables and use the env file
       - RABBITMQ_DEFAULT_USER=userf
       - RABBITMQ_DEFAULT_PASS=userd
 
@@ -27,21 +27,23 @@ services:
       - 6060:6379
     command: redis-server --save 60 1 --loglevel warning
 
-  server:
+  server: 
     container_name: server
-    build: ./django_app
-    networks:
-      internal_net:
+    image: python:3.11-alpine
+    restart: "on-failure"
+    networks: 
+      - internal_net
+    working_dir: /home/server
     volumes:
-      - ./django_app/:/home/
-      - ./shared_data:/home/media
+      - ./django_app/:/home/server/
+      - ./shared_data:/home/server/media
     ports:
       - 7070:8080
-    env_file: .env
-    restart: "on-failure"
     depends_on: 
       celery: 
         condition: service_started
+    tty: true
+    entrypoint: sh -c "pip install -r requirements.txt --root-user-action=ignore && python manage.py makemigrations && python manage.py migrate && python manage.py runserver server:8080"
 
   celery:
     container_name: celery

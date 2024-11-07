@@ -12,12 +12,10 @@ app = Celery (
     # TODO: these needs to be replaced by env variables 
 )
 
-
 def home_view(request: HttpRequest):
 
     if (request.method == 'POST'):
         form = UploadFileForm(request.POST, request.FILES)
-        print("______________________________________________________")
         if form.is_valid():
             file = request.FILES.get('file')
             filename = default_storage.save(file.name, file)

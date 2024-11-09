@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <title>
+    Home Page
+  </title>
+</head>
+
+<body>
+  <section>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{form}}
+      <button type="submit"> UPLOAD </button>
+    </form>
+  </section>
+</body>
+
+</html>

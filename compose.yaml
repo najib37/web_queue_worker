@@ -43,18 +43,21 @@ services:
       celery: 
         condition: service_started
     tty: true
-    entrypoint: sh -c "pip install -r requirements.txt --root-user-action=ignore && python manage.py makemigrations && python manage.py migrate && python manage.py runserver server:8080"
+    entrypoint: 
+      sh -c "pip install -r requirements.txt --root-user-action=ignore && python manage.py makemigrations && python manage.py migrate && python manage.py runserver server:8080"
 
   celery:
     container_name: celery
-    build: ./celery
-    networks:
-      internal_net:
-    volumes:
-      - ./celery/:/home/
-      - ./shared_data:/home/media
-    env_file: .env
+    image: python:3.11-alpine
     restart: "on-failure"
+    networks: 
+      - internal_net
+    working_dir: /home/celery
+    entrypoint:
+      sh -c "pip install -r requirements.txt && celery -A tasks worker --loglevel=info"
+    volumes:
+      - ./celery/:/home/celery
+      - ./shared_data:/home/celery/media
     depends_on:
       rabbitmq: 
         condition: service_started

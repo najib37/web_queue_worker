@@ -17,9 +17,12 @@ Including another URLconf
 # from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import path
-from .views import home_view
+from .views import HomeView, ProgressView, DownloadView
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', home_view),
+    path('', HomeView.as_view(), name='home'),
+    path('progress/', ProgressView.as_view(), name='progress'),
+    path('download/', DownloadView.as_view(), name='download_file'),
+
 ]

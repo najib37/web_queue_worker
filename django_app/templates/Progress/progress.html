@@ -1,0 +1,22 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/progress/progress.css' %}">
+  <title>
+    Progress Page
+  </title>
+</head>
+
+<h1>Progress Page</h1>
+<div id="progress-container">
+  <div id="progress-bar"></div>
+  <button id="save-button" style="display: none;">Save Progress</button>
+</div>
+<script src="{% static 'js/socket.js' %}"></script>
+
+</html>

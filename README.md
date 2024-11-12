@@ -5,6 +5,12 @@ This is a simple Web Queue Worker implementation using Django, Celery, RabbitMQ,
 
 The project provides a web interface to upload CSV files to a Django server. The server sends the files to a remote instance of Celery, which converts them to JSON and sends them back to the users. The main goal of the project is to offload the process-intensive task of converting the files to a remote web queue. RabbitMQ is used to communicate the filename and the progress of processing the files to the server, which then sends the information to the user using web sockets.
 
+## Notes
+- The design and UI won't be a big focus of the project; they are only to show the other functionality.
+- This project is intended to explore Django ASGI model async request-response cycle deeply.
+- Get familiar with RabbitMQ and the microservices architecture.
+- Host Celery remotely.
+
 ## Features
 - Upload CSV files via a web interface
 - Asynchronous processing of CSV files to JSON

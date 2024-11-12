@@ -5,5 +5,5 @@
 venv/
 __pycache__/
 *.sqlite3
-shared_data/
-static/
+shared_data/*.csv
+shared_data/*.json

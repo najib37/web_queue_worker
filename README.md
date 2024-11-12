@@ -1,16 +1,39 @@
 # Web Queue Worker
-## this is a simple Web Queue Worker implementation using django, celery,  rabbitMq, and reddis
 
-the project is a scuffed web interface to upload csv files to a django server, that sends them and to a remote instance of celery that converts them to json and sends them back to the users. 
-the point of the project is offload the process intensive of converting the files to a remote web queue, and use rabbitmq to communicate the filename and the progress of processing the files to the server, which in its turn send it to the user using web sockets.
+## Overview
+This is a simple Web Queue Worker implementation using Django, Celery, RabbitMQ, and Redis.
 
-# TECHONLOGIES
-- django: web interface / server
-- celery: async web queue & task manager
-- rabbitmq: communicating between the services
-- reddis: stores the result of the celery tasks
+The project provides a web interface to upload CSV files to a Django server. The server sends the files to a remote instance of Celery, which converts them to JSON and sends them back to the users. The main goal of the project is to offload the process-intensive task of converting the files to a remote web queue. RabbitMQ is used to communicate the filename and the progress of processing the files to the server, which then sends the information to the user using web sockets.
 
-# USAGE
+## Features
+- Upload CSV files via a web interface
+- Asynchronous processing of CSV files to JSON
+- Real-time progress updates using web sockets
+- Offload processing tasks to a remote queue
+
+## Technologies
+- **Django**: Web interface / server
+- **Celery**: Asynchronous web queue & task manager
+- **RabbitMQ**: Communication between services
+- **Redis**: Stores the result of the Celery tasks
+
+## Usage
+To start the project, use the following command:
+```sh
 docker compose up --build
+```
 
-!! this project is still in DEV
+## Site
+The web interface can be accessed at:
+```
+http://localhost:7070
+```
+
+## Screenshots
+(upload screenshots here)
+
+## Links
+- [Django](https://www.djangoproject.com/)
+- [Celery](https://docs.celeryproject.org/en/stable/)
+- [RabbitMQ](https://www.rabbitmq.com/)
+- [Redis](https://redis.io/)
